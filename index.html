@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人作品集</title>
+    <style>
+        /* 基礎全域設定 */
+        :root {
+            --primary-blue: #003dfa;
+            --bg-beige: #efebe8;
+            --text-dark: #000000;
+            --card-white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-beige);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* 頂部導覽列 */
+        header {
+            background-color: var(--card-white);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .logo-area .name-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .blue-square {
+            width: 16px;
+            height: 16px;
+            background-color: var(--primary-blue);
+        }
+
+        .logo-name {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .logo-title {
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* 漢堡選單按鈕 */
+        .menu-btn {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            align-items: flex-end;
+        }
+
+        .menu-btn div {
+            height: 3px;
+            background-color: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+        .menu-btn div:first-child { width: 25px; }
+        .menu-btn div:last-child { width: 15px; }
+
+        /* 全螢幕選單 (隱藏狀態) */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--bg-beige);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            display: block;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 20px;
+            font-weight: bold;
+            margin: 25px 0;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .nav-links a.active {
+            color: var(--primary-blue);
+        }
+
+        /* 主要內容區塊 */
+        main {
+            padding: 20px;
+            max-width: 480px; /* 模擬手機版最大寬度 */
+            margin: 0 auto;
+        }
+
+        /* Hero 區塊 (名片卡) */
+        .hero-card {
+            background-color: var(--bg-beige);
+            border-radius: 10px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background: linear-gradient(to bottom, #f5f2f0 0%, #eae5e1 100%);
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            background-color: #ccc; /* 圖片載入前的佔位色 */
+        }
+
+        .hero-name {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            line-height: 1.1;
+        }
+
+        .hero-line {
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-blue);
+            margin: 15px auto 30px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: white;
+            border: 2px solid var(--primary-blue);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-dark);
+            border: 2px solid var(--text-dark);
+        }
+
+        /* 社群圖標列 */
+        .social-bar {
+            background-color: var(--card-white);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 0 -20px -40px; /* 貼齊卡片底部 */
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .social-bar a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* 通用 Section 標題 */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 60px 0 20px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .intro-text {
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        /* 專案與經驗卡片 */
+        .card {
+            background-color: var(--card-white);
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 25px;
+            width: 8px;
+            height: 40px;
+            background-color: var(--primary-blue);
+        }
+
+        .card-title {
+            color: var(--primary-blue);
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .card-subtitle {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .card-content p {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        
+        .card-content strong {
+            display: inline-block;
+            width: 70px;
+        }
+
+        /* 頁尾聯絡資訊 */
+        footer {
+            margin-top: 60px;
+            padding: 30px 20px;
+            background-color: var(--card-white);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <div class="name-wrap">
+                <div class="blue-square"></div>
+                <div class="logo-name">[你的名字]</div>
+            </div>
+            <div class="logo-title">[你的職稱，例如：前端工程師]</div>
+        </div>
+        <div class="menu-btn" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <div class="nav-overlay" id="navMenu">
+        <div class="close-btn" onclick="toggleMenu()">✕</div>
+        <div class="nav-links">
+            <a href="#about" class="active" onclick="toggleMenu()">ABOUT ME</a>
+            <a href="#projects" onclick="toggleMenu()">PROJECTS</a>
+            <a href="#experience" onclick="toggleMenu()">EXPERIENCE</a>
+            <a href="#contact" onclick="toggleMenu()">CONTACT</a>
+        </div>
+    </div>
+
+    <main>
+        <section id="about">
+            <div class="hero-card">
+                <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-img">
+                <h1 class="hero-name">[你的名字]<br>[英文名字]</h1>
+                <div class="hero-line"></div>
+                
+                <div class="btn-group">
+                    <a href="#experience" class="btn btn-primary">經歷</a>
+                    <a href="#projects" class="btn btn-outline">專案</a>
+                </div>
+
+                <div class="social-bar">
+                    <a href="[LinkedIn連結]" target="_blank">LinkedIn</a>
+                    <a href="[GitHub連結]" target="_blank">GitHub</a>
+                    <a href="mailto:[你的信箱]">Email</a>
+                </div>
+            </div>
+
+            <div class="section-header" style="margin-top: 50px;">
+                <h2 style="font-size: 48px;">Hello</h2>
+            </div>
+            <p class="intro-text">
+                [請在此輸入你的個人簡介。例如：我是一位充滿熱情的新鮮人，專注於解決問題與創造價值。在這裡可以寫一段簡短的自我介紹，讓訪客快速了解你的特質與目標。]
+            </p>
+        </section>
+
+        <section id="projects">
+            <div class="section-header">
+                <div class="blue-square" style="width: 24px; height: 24px;"></div>
+                <h2>Projects</h2>
+            </div>
+            <p class="intro-text">以下是我過去參與的精選專案，包含畢業製作與個人網站開發，展現了我的技術能力與解決問題的思維。</p>
+
+            <div class="card">
+                <h3 class="card-title">[專案名稱：例如 畢業論文/專題網站]</h3>
+                <div class="card-subtitle">[專案年份或狀態]</div>
+                <div class="card-content">
+                    <p><strong>摘要：</strong>[解決了什麼問題？例如：開發了一套校園二手書交易平台，解決了學生每學期買賣教科書資訊不流通的痛點。]</p>
+                    <p><strong>技術棧：</strong>[使用了哪些語言/資料庫？例如：React, Node.js, MongoDB]</p>
+                    <p><strong>我的角色：</strong>[負責分析、開發還是測試？例如：擔任前端開發，負責切版與 API 串接。]</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">[專案名稱 02]</h3>
+                <div class="card-subtitle">[專案年份或狀態]</div>
+                <div class="card-content">
+                    <p><strong>摘要：</strong>[簡單描述專案內容與貢獻]</p>
+                    <p><strong>技術棧：</strong>[使用的技術]</p>
+                    <p><strong>我的角色：</strong>[你在其中的職責]</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <div class="section-header">
+                <div class="blue-square" style="width: 24px; height: 24px;"></div>
+                <h2>Experience</h2>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title">[公司/店家名稱]</h3>
+                <div class="card-subtitle">[你的職位，例如：兼職服務生 / 實習生] | [工作期間]</div>
+                <div class="card-content">
+                    <p><strong>職責描述：</strong>[具體工作內容。例如：負責收銀、顧客服務、商品庫存盤點與賣場陳列調整。]</p>
+                    <p><strong>學習成果：</strong>[例如：培養了在高壓環境下的應變能力、提升了與客人的溝通技巧，並初步了解零售業的營運流程。]</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="contact">
+        <h2 style="margin-bottom: 20px;">Let's Connect</h2>
+        <p style="margin-bottom: 20px;">歡迎透過以下方式與我聯繫，期待有進一步交流的機會！</p>
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <a href="[LinkedIn連結]" class="btn btn-primary" style="padding: 10px 20px;">LinkedIn</a>
+            <a href="[GitHub連結]" class="btn btn-outline" style="padding: 10px 20px;">GitHub</a>
+        </div>
+    </footer>
+
+    <script>
+        // 控制手機版選單的開關
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
