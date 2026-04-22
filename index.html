@@ -283,6 +283,32 @@
             background-color: var(--card-white);
             text-align: center;
         }
+
+        .form-group {
+    margin-bottom: 30px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #000; /* 圖片中黑色的粗底線 */
+    padding: 10px 0;
+    font-size: 16px;
+    background: transparent;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-bottom-color: var(--primary-blue); /* 點擊時底線變藍色 */
+}
     </style>
 </head>
 <body>
@@ -383,6 +409,52 @@
         </section>
 
     </main>
+
+<section id="contact" style="padding: 60px 20px; background-color: var(--bg-beige);">
+    <div style="text-align: center; margin-bottom: 40px;">
+        <div class="blue-square" style="width: 24px; height: 24px; margin: 0 auto 15px;"></div>
+        <h2 style="font-size: 42px; font-weight: bold;">Let's talk</h2>
+    </div>
+
+    <div style="max-width: 500px; margin: 0 auto; background: white; padding: 40px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+        
+        <form action="https://formsubmit.co/你的帳號@gmail.com" method="POST">
+            
+            <input type="hidden" name="_subject" value="來自個人作品集的新訊息！">
+            <input type="hidden" name="_captcha" value="false">
+
+            <div class="form-group">
+                <label>First Name *</label>
+                <input type="text" name="first_name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Last Name *</label>
+                <input type="text" name="last_name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email *</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label>Subject</label>
+                <input type="text" name="subject">
+            </div>
+
+            <div class="form-group">
+                <label>Message</label>
+                <textarea name="message" rows="4" style="border: none; border-bottom: 2px solid #000; width: 100%; outline: none;"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; border-radius: 0; margin-top: 30px; cursor: pointer; border: none; padding: 15px;">
+                SEND
+            </button>
+        </form>
+    </div>
+</section>
+
 
     <footer id="contact">
         <h2 style="margin-bottom: 20px;">Let's Connect</h2>
