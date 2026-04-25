@@ -1,25 +1,29 @@
 <!DOCTYPE html>
+<!-- saved from url=(0027)https://aakaiii.github.io./ -->
 <html lang="zh-TW">
+
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>個人作品集</title>
     <style>
-        /* 基礎全域設定 */
+
+   /* 基礎全域設定 */
         :root {
             --primary-blue: #003dfa;
             --bg-beige: #efebe8;
             --text-dark: #000000;
             --card-white: #ffffff;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Helvetica Neue', Arial, sans-serif;
         }
-        
+
         body {
             background-color: var(--bg-beige);
             color: var(--text-dark);
@@ -33,284 +37,168 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
+            position: sticky; /* 🚀修復：讓導覽列固定在頂部 */
             top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            z-index: 1000; /* 確保不會被下面的內容蓋住 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
-        .logo-area .name-wrap {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 5px;
-        }
+        /* 點擊選單跳轉時，預留 header 的高度 */
+        section { scroll-margin-top: 100px; }
 
-        .blue-square {
-            width: 16px;
-            height: 16px;
-            background-color: var(--primary-blue);
-        }
-
-        .logo-name {
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .logo-title {
-            font-size: 12px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+        .logo-area .name-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+        .blue-square { width: 16px; height: 16px; background-color: var(--primary-blue); }
+        .logo-name { font-size: 22px; font-weight: bold; }
+        .logo-title { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
 
         /* 漢堡選單按鈕 */
-        .menu-btn {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            align-items: flex-end;
-        }
-
-        .menu-btn div {
-            height: 3px;
-            background-color: var(--primary-blue);
-            transition: all 0.3s ease;
-        }
+        .menu-btn { display: flex; flex-direction: column; gap: 6px; cursor: pointer; align-items: flex-end; }
+        .menu-btn div { height: 3px; background-color: var(--primary-blue); transition: all 0.3s ease; }
         .menu-btn div:first-child { width: 25px; }
         .menu-btn div:last-child { width: 15px; }
 
-        /* 全螢幕選單 (隱藏狀態) */
+        /* 全螢幕選單 */
         .nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background-color: var(--bg-beige);
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: var(--bg-beige); z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
+        .nav-overlay.active { opacity: 1; pointer-events: all; }
+        .close-btn { position: absolute; top: 30px; right: 30px; font-size: 30px; cursor: pointer; font-weight: bold; }
+        .nav-links a { display: block; text-decoration: none; color: var(--text-dark); font-size: 20px; font-weight: bold; margin: 25px 0; text-align: center; text-transform: uppercase; }
+        .nav-links a.active { color: var(--primary-blue); }
 
-        .nav-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            font-size: 30px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .nav-links a {
-            display: block;
-            text-decoration: none;
-            color: var(--text-dark);
-            font-size: 20px;
-            font-weight: bold;
-            margin: 25px 0;
-            text-align: center;
-            text-transform: uppercase;
-        }
-
-        .nav-links a.active {
-            color: var(--primary-blue);
-        }
-
-        /* 主要內容區塊 */
+        /* ================= 主要內容區塊 ================= */
         main {
             padding: 20px;
-            max-width: 480px; /* 模擬手機版最大寬度 */
+            max-width: 900px; /* 🚀修復：從 480px 放大，讓所有卡片與幻燈片能正常顯示 */
             margin: 0 auto;
         }
 
-        /* Hero 區塊 (名片卡) */
+        /* Hero 區塊 */
         .hero-card {
-            background-color: var(--bg-beige);
-            border-radius: 10px;
-            padding: 40px 20px;
-            text-align: center;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background-color: var(--card-white);
+            border-radius: 10px; padding: 40px 20px; text-align: center; margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             background: linear-gradient(to bottom, #f5f2f0 0%, #eae5e1 100%);
         }
-
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 20px;
-            display: block;
-            background-color: #ccc; /* 圖片載入前的佔位色 */
-        }
-
-        .hero-name {
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            line-height: 1.1;
-        }
-
-        .hero-line {
-            width: 60px;
-            height: 3px;
-            background-color: var(--primary-blue);
-            margin: 15px auto 30px;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-
-        .btn {
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-weight: bold;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-blue);
-            color: white;
-            border: 2px solid var(--primary-blue);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--text-dark);
-            border: 2px solid var(--text-dark);
-        }
-
-        /* 社群圖標列 */
+        .profile-img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin: 0 auto 20px; display: block; background-color: #ccc; }
+        .hero-name { font-size: 32px; font-weight: bold; margin-bottom: 10px; line-height: 1.1; }
+        .hero-line { width: 60px; height: 3px; background-color: var(--primary-blue); margin: 15px auto 30px; }
+        .btn-group { display: flex; gap: 10px; justify-content: center; margin-bottom: 30px; }
+        .btn { padding: 12px 25px; border-radius: 25px; font-weight: bold; text-decoration: none; font-size: 14px; }
+        .btn-primary { background-color: var(--primary-blue); color: white; border: 2px solid var(--primary-blue); }
+        .btn-outline { background-color: transparent; color: var(--text-dark); border: 2px solid var(--text-dark); }
         .social-bar {
-            background-color: var(--card-white);
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 0 -20px -40px; /* 貼齊卡片底部 */
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
+            background-color: var(--card-white); padding: 15px; display: flex; justify-content: center; gap: 20px;
+            margin: 0 -20px -40px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;
         }
-
-        .social-bar a {
-            color: var(--text-dark);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-        }
+        .social-bar a { color: var(--text-dark); text-decoration: none; font-weight: bold; font-size: 14px; }
 
         /* 通用 Section 標題 */
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin: 60px 0 20px;
-        }
-
-        .section-header h2 {
-            font-size: 36px;
-            font-weight: bold;
-        }
-
-        .intro-text {
-            font-size: 16px;
-            margin-bottom: 30px;
-            color: #333;
-        }
+        .section-header { display: flex; align-items: center; gap: 15px; margin: 60px 0 20px; }
+        .section-header h2 { font-size: 36px; font-weight: bold; }
+        .intro-text { font-size: 16px; margin-bottom: 30px; color: #333; }
 
         /* 專案與經驗卡片 */
         .card {
+            background-color: var(--card-white); padding: 30px; margin-bottom: 30px;
+            position: relative; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        .card::before { content: ''; position: absolute; left: 0; top: 25px; width: 8px; height: 40px; background-color: var(--primary-blue); }
+        .card-title { color: var(--primary-blue); font-size: 20px; font-weight: bold; margin-bottom: 5px; }
+        .card-subtitle { font-weight: bold; margin-bottom: 15px; font-size: 14px; }
+        .card-content p { margin-bottom: 10px; font-size: 15px; }
+        .card-content strong { display: inline-block; width: 70px; }
+
+        /* ================= 影音外框 (修復破版) ================= */
+        .media-frame {
+            width: 100%;
+            max-width: 600px; /* 限制最大寬度 */
+            margin: 15px auto; /* 置中 */
             background-color: var(--card-white);
-            padding: 25px;
-            margin-bottom: 20px;
-            position: relative;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            aspect-ratio: 16 / 9; /* 統一為 16:9 比例 */
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            padding: 10px;
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 25px;
-            width: 8px;
-            height: 40px;
-            background-color: var(--primary-blue);
+        /* 🚀修復：移除絕對寬度，讓圖片乖乖待在容器內 */
+        .media-frame img, .slide img {
+            width: 100%; height: 100%; object-fit: contain; 
         }
 
-        .card-title {
-            color: var(--primary-blue);
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 5px;
+        .project-details-image {
+            cursor: pointer;
+            transition: transform 0.2s ease;
         }
+        .project-details-image:hover { transform: scale(1.02); }
 
-        .card-subtitle {
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 14px;
+        /* ================= 幻燈片樣式 ================= */
+        .slideshow-container {
+            width: 100%; max-width: 800px; margin: 20px auto; position: relative; overflow: hidden;
         }
+        .slides-wrapper {
+            display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; scrollbar-width: none;
+        }
+        .slides-wrapper::-webkit-scrollbar { display: none; }
+        .slide {
+            flex: 0 0 100%; scroll-snap-align: start; display: flex; align-items: center; justify-content: center;
+            background-color: var(--card-white); aspect-ratio: 16 / 9;
+        }
+        .dots-container { text-align: center; padding: 10px 0; }
+        .dot { height: 8px; width: 8px; margin: 0 5px; background-color: #bbb; border-radius: 50%; display: inline-block; transition: background-color 0.3s; }
+        .dot.active { background-color: var(--primary-blue); }
 
-        .card-content p {
-            margin-bottom: 10px;
-            font-size: 15px;
+        /* ================= 展開式列表 (活動) ================= */
+        .activity-list {
+            width: 100%; margin: 20px auto; background: var(--card-white); border-radius: 10px; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
+        .list-header, .accordion-header {
+            display: grid; grid-template-columns: 2fr 1fr 2fr; padding: 20px; border-bottom: 1px solid #eee; align-items: center;
+        }
+        .list-header { background-color: #f9f9f9; font-weight: bold; color: #666; border-bottom: 2px solid var(--primary-blue); }
+        .accordion-header { cursor: pointer; transition: background 0.3s; }
+        .accordion-header:hover { background-color: #f0f4ff; }
         
-        .card-content strong {
-            display: inline-block;
-            width: 70px;
+        .accordion-content {
+            max-height: 0; overflow: hidden; transition: max-height 0.6s ease-out; background-color: #fafafa;
         }
+        .details-inner { padding: 30px; border-bottom: 1px solid #eee; }
+        
+        /* 🚀修復：提高高度限制，讓有幻燈片的內容不會被卡掉一半 */
+        .accordion-item.active .accordion-content { max-height: 2500px; }
+        .accordion-item.active .accordion-header { background-color: #f0f4ff; font-weight: bold; }
 
-        /* 頁尾聯絡資訊 */
-        footer {
-            margin-top: 60px;
-            padding: 30px 20px;
-            background-color: var(--card-white);
-            text-align: center;
+        /* ================= 聯絡表單與頁尾 ================= */
+        .form-group { margin-bottom: 30px; text-align: left; }
+        .form-group label { display: block; font-size: 16px; font-weight: bold; margin-bottom: 8px; }
+        .form-group input, .form-group textarea { 
+            width: 100%; border: none; border-bottom: 2px solid #000; padding: 10px 0; 
+            font-size: 16px; background: transparent; outline: none; transition: border-color 0.3s; 
         }
+        .form-group input:focus, .form-group textarea:focus { border-bottom-color: var(--primary-blue); }
+        
+        footer { margin-top: 60px; padding: 30px 20px; background-color: var(--card-white); text-align: center; }
 
-        .form-group {
-    margin-bottom: 30px;
-}
+        /* ================= 燈箱效果 ================= */
+        .modal-overlay {
+            display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); align-items: center; justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content { max-width: 95%; max-height: 90vh; border-radius: 10px; object-fit: contain; animation: zoomIn 0.3s ease; }
+        .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; font-weight: bold; cursor: pointer; z-index: 100000; }
+        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-.form-group label {
-    display: block;
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-.form-group input {
-    width: 100%;
-    border: none;
-    border-bottom: 2px solid #000; /* 圖片中黑色的粗底線 */
-    padding: 10px 0;
-    font-size: 16px;
-    background: transparent;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-.form-group input:focus {
-    border-bottom-color: var(--primary-blue); /* 點擊時底線變藍色 */
-}
-    </style>
+        </style>
 </head>
+
 <body>
 
     <header>
@@ -332,7 +220,9 @@
         <div class="nav-links">
             <a href="#about" class="active" onclick="toggleMenu()">ABOUT ME</a>
             <a href="#projects" onclick="toggleMenu()">PROJECTS</a>
+            <a href="#activity-competition" onclick="toggleMenu()">ACTIVITY & COMPETITION</a>
             <a href="#experience" onclick="toggleMenu()">EXPERIENCE</a>
+            <a href="#education" onclick="toggleMenu()">EDUCATION</a>
             <a href="#contact" onclick="toggleMenu()">CONTACT</a>
         </div>
     </div>
@@ -340,19 +230,19 @@
     <main>
         <section id="about">
             <div class="hero-card">
-                <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-img">
+                <img src="image/me.jpg" alt="Profile Picture" class="profile-img">
                 <h1 class="hero-name">[你的名字]<br>[英文名字]</h1>
                 <div class="hero-line"></div>
-                
+
                 <div class="btn-group">
-                    <a href="#experience" class="btn btn-primary">經歷</a>
-                    <a href="#projects" class="btn btn-outline">專案</a>
+                    <a href="https://aakaiii.github.io./#experience" class="btn btn-primary">經歷</a>
+                    <a href="https://aakaiii.github.io./#projects" class="btn btn-outline">專案</a>
                 </div>
 
                 <div class="social-bar">
-                    <a href="[LinkedIn連結]" target="_blank">LinkedIn</a>
-                    <a href="[GitHub連結]" target="_blank">GitHub</a>
-                    <a href="mailto:[你的信箱]">Email</a>
+                    <a href="https://aakaiii.github.io./[LinkedIn%E9%80%A3%E7%B5%90]" target="_blank">LinkedIn</a>
+                    <a href="https://aakaiii.github.io./[GitHub%E9%80%A3%E7%B5%90]" target="_blank">GitHub</a>
+                    <a href="mailto:[%E4%BD%A0%E7%9A%84%E4%BF%A1%E7%AE%B1]">Email</a>
                 </div>
             </div>
 
@@ -379,25 +269,236 @@
                     <p><strong>技術棧：</strong>[使用了哪些語言/資料庫？例如：React, Node.js, MongoDB]</p>
                     <p><strong>我的角色：</strong>[負責分析、開發還是測試？例如：擔任前端開發，負責切版與 API 串接。]</p>
                 </div>
+                <br>
+
+
+                <p><strong>實際電腦操作</strong></p>
+                <div class="media-frame">
+                    <img src="video/demo.gif" alt="動態操作" loading="lazy" class="project-details-image">
+                </div>
+                <br>
+                <p><strong>手機操作</strong></p>
+                <div class="media-frame">
+
+                    <img src="video/phone.gif" alt="動態操作" loading="lazy" class="project-details-image">
+                </div>
+                <br>
+                <p><strong>圖像辨認示範</strong></p>
+                <div class="media-frame">
+                    <img src="video/picture.gif" alt="動態操作" loading="lazy" class="project-details-image">
+                </div>
+
+
+
             </div>
 
             <div class="card">
                 <h3 class="card-title">[專案名稱 02]</h3>
+                <div class="card-subtitle">[專案年份或狀態]</div>
+                    <div class="card-content">
+                        <p><strong>摘要：</strong>[簡單描述專案內容與貢獻]</p>
+                        <p><strong>技術棧：</strong>[使用的技術]</p>
+                        <p><strong>我的角色：</strong>[你在其中的職責]</p>
+                    </div>
+                <div class="slideshow-container">
+                    <div class="slides-wrapper">
+                        <div class="slide">
+                            <img src="image/8.jpg" class="project-details-image" alt="Step 1">
+                        </div>
+                        <div class="slide">
+                            <img src="image/12.jpg" class="project-details-image" alt="Step 2">
+                        </div>
+                        <div class="slide">
+                            <img src="image/13.jpg" class="project-details-image" alt="Step 3">
+                        </div>
+                        <div class="slide">
+                            <img src="image/15.jpg" class="project-details-image" alt="Step 4">
+                        </div>
+                    </div>
+
+                    <div class="dots-container">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="card-title">[專案名稱 03]</h3>
                 <div class="card-subtitle">[專案年份或狀態]</div>
                 <div class="card-content">
                     <p><strong>摘要：</strong>[簡單描述專案內容與貢獻]</p>
                     <p><strong>技術棧：</strong>[使用的技術]</p>
                     <p><strong>我的角色：</strong>[你在其中的職責]</p>
                 </div>
+                <br>
+                <p><strong>實際網頁操作</strong></p>
+                <div class="media-frame">
+                    <img src="video/virtual_store.gif" alt="動態操作" loading="lazy" class="project-details-image">
+                </div>
+
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">[專案名稱 04]</h3>
+                <div class="card-subtitle">[專案年份或狀態]</div>
+                <div class="card-content">
+                    <p><strong>摘要：</strong>[簡單描述專案內容與貢獻]</p>
+                    <p><strong>技術棧：</strong>[使用的技術]</p>
+                    <p><strong>我的角色：</strong>[你在其中的職責]</p>
+                </div>
+                <div class="slideshow-container">
+                    <div class="slides-wrapper">
+                        <div class="slide">
+                            <img src="image/5.jpg" class="project-details-image" alt="Step 1">
+                        </div>
+                        <div class="slide">
+                            <img src="image/6.jpg" class="project-details-image" alt="Step 2">
+                        </div>
+                        <div class="slide">
+                            <img src="image/7.jpg" class="project-details-image" alt="Step 3">
+                        </div>
+                        <div class="slide">
+                            <img src="image/08.jpg" class="project-details-image" alt="Step 4">
+                        </div>
+                        <div class="slide">
+                            <img src="image/9.jpg" class="project-details-image" alt="Step 5">
+                        </div>
+                    </div>
+
+                    <div class="dots-container">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="activity-competition">
+            <div class="section-header">
+                <div class="blue-square" style="width: 24px; height: 24px;"></div>
+                <h2>Activity&Competition</h2>
+            </div>
+            <div class="activity-list">
+                <div class="list-header">
+                    <div class="col-name">活動/比賽名稱</div>
+                    <div class="col-year">年級</div>
+                    <div class="col-role">擔任工作</div>
+                </div>
+
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="col-name">解決問題能力競賽-第一屆</div>
+                        <div class="col-year">大一</div>
+                        <div class="col-role">主題設計構想</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="details-inner">
+                            <p><strong>活動摘要：</strong>這是關於第一屆競賽的詳細描述，我們解決了...</p>
+                            <div class="slideshow-container">
+                                <div class="slides-wrapper">
+                                    <div class="slide"><img src="image/solve1.png" class="project-details-image"></div>
+                                    <div class="slide">
+                                        <div class="text-placeholder-card">
+                                            <div class="card-icon">💡</div>
+                                            <!-- <p>"雖然沒有現場照片，但這次經驗讓我學會了..."</p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="col-name">解決問題能力競賽-第二屆</div>
+                        <div class="col-year">大二</div>
+                        <div class="col-role">主題設計構想</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="details-inner">
+                            <!-- <p><strong>活動摘要：</strong>內容...</p> -->
+                            <div class="slide"><img src="image/solve2.png" class="project-details-image"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="col-name">台灣經貿網跨境電商實戰營</div>
+                        <div class="col-year">大三</div>
+                        <div class="col-role">學員(書面統計及報告)</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="details-inner">
+                            <!-- <p><strong>活動摘要：</strong>在微軟實踐營中，我負責...</p> -->
+                            <div class="slide"><img src="image/blue.png" class="project-details-image"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="col-name">Google Analytics 4 Certification</div>
+                        <div class="col-year">大三</div>
+                        <div class="col-role">學員(實際操作)</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="details-inner">
+                            <!-- <p><strong>活動摘要：</strong>在微軟實踐營中，我負責...</p> -->
+                            <div class="slide"><img src="image/GA4.png" class="project-details-image"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="col-name">NVIDIA大使工作坊-深度學習入門認證</div>
+                        <div class="col-year">大四</div>
+                        <div class="col-role">學員(實際操作)</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="details-inner">
+                            <!-- <p><strong>活動摘要：</strong>在微軟實踐營中，我負責...</p> -->
+                            <div class="slide"><img src="image/Nvidia.png" class="project-details-image"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="col-name">微軟 - Coding Angels</div>
+                        <div class="col-year">大四</div>
+                        <div class="col-role">學員(實際操作)</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="details-inner">
+                            <!-- <p><strong>活動摘要：</strong>在微軟實踐營中，我負責...</p> -->
+                            <div class="slide"><img src="image/microsoft.jpg" class="project-details-image"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
+
         <section id="experience">
+
             <div class="section-header">
                 <div class="blue-square" style="width: 24px; height: 24px;"></div>
                 <h2>Experience</h2>
             </div>
-            
+
             <div class="card">
                 <h3 class="card-title">[公司/店家名稱]</h3>
                 <div class="card-subtitle">[你的職位，例如：兼職服務生 / 實習生] | [工作期間]</div>
@@ -408,60 +509,84 @@
             </div>
         </section>
 
+        <section id="education">
+            <div class="section-header">
+
+                <div class="blue-square" style="width: 24px; height: 24px;"></div>
+                <h2>Education</h2>
+            </div>
+
+            <div class="card">
+                <p class="item-date">2020 - 2024</p>
+                <h3 class="item-name">某某大學 - 資訊管理學系</h3>
+                <p class="item-desc">
+                    <strong>核心領域：</strong>系統分析、專案管理、資訊安全。<br>
+                    <strong>專題研究：</strong>[你的畢業專題名稱]，負責專案時程控管與技術文件撰寫。
+                </p>
+            </div>
+
+        </section>
+
     </main>
 
-<section id="contact" style="padding: 60px 20px; background-color: var(--bg-beige);">
-    <div style="text-align: center; margin-bottom: 40px;">
-        <div class="blue-square" style="width: 24px; height: 24px; margin: 0 auto 15px;"></div>
-        <h2 style="font-size: 42px; font-weight: bold;">Let's talk</h2>
-    </div>
+    <section id="contact" style="padding: 60px 20px; background-color: var(--bg-beige);">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <div class="blue-square" style="width: 24px; height: 24px; margin: 0 auto 15px;"></div>
+            <h2 style="font-size: 42px; font-weight: bold;">Let's talk</h2>
+        </div>
 
-    <div style="max-width: 500px; margin: 0 auto; background: white; padding: 40px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-        
-        <form action="https://formsubmit.co/aa0908818817@gmail.com" method="POST">
-            
-            <input type="hidden" name="_subject" value="來自個人作品集的新訊息！">
-            <input type="hidden" name="_captcha" value="false">
+        <div
+            style="max-width: 500px; margin: 0 auto; background: white; padding: 40px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
 
-            <div class="form-group">
-                <label>First Name *</label>
-                <input type="text" name="first_name" required>
-            </div>
+            <form action="https://formsubmit.co/aa0908818817@gmail.com" method="POST">
 
-            <div class="form-group">
-                <label>Last Name *</label>
-                <input type="text" name="last_name" required>
-            </div>
+                <input type="hidden" name="_subject" value="來自個人作品集的新訊息！">
+                <input type="hidden" name="_captcha" value="false">
 
-            <div class="form-group">
-                <label>Email *</label>
-                <input type="email" name="email" required>
-            </div>
+                <div class="form-group">
+                    <label>First Name *</label>
+                    <input type="text" name="first_name" required="">
+                </div>
 
-            <div class="form-group">
-                <label>Subject</label>
-                <input type="text" name="subject">
-            </div>
+                <div class="form-group">
+                    <label>Last Name *</label>
+                    <input type="text" name="last_name" required="">
+                </div>
 
-            <div class="form-group">
-                <label>Message</label>
-                <textarea name="message" rows="4" style="border: none; border-bottom: 2px solid #000; width: 100%; outline: none;"></textarea>
-            </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" name="email" required="">
+                </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%; border-radius: 0; margin-top: 30px; cursor: pointer; border: none; padding: 15px;">
-                SEND
-            </button>
-        </form>
-    </div>
-</section>
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input type="text" name="subject">
+                </div>
+
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="message" rows="4"
+                        style="border: none; border-bottom: 2px solid #000; width: 100%; outline: none;"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary"
+                    style="width: 100%; border-radius: 0; margin-top: 30px; cursor: pointer; border: none; padding: 15px;">
+                    SEND
+                </button>
+            </form>
+        </div>
+
+    </section>
 
 
-    <footer id="contact">
+    <footer id="footer">
         <h2 style="margin-bottom: 20px;">Let's Connect</h2>
         <p style="margin-bottom: 20px;">歡迎透過以下方式與我聯繫，期待有進一步交流的機會！</p>
         <div style="display: flex; gap: 15px; justify-content: center;">
-            <a href="[LinkedIn連結]" class="btn btn-primary" style="padding: 10px 20px;">LinkedIn</a>
-            <a href="[GitHub連結]" class="btn btn-outline" style="padding: 10px 20px;">GitHub</a>
+            <a href="https://aakaiii.github.io./[LinkedIn%E9%80%A3%E7%B5%90]" class="btn btn-primary"
+                style="padding: 10px 20px;">LinkedIn</a>
+            <a href="https://aakaiii.github.io./[GitHub%E9%80%A3%E7%B5%90]" class="btn btn-outline"
+                style="padding: 10px 20px;">GitHub</a>
         </div>
     </footer>
 
@@ -472,5 +597,107 @@
             navMenu.classList.toggle('active');
         }
     </script>
+
+    <div id="UMS_TOOLTIP"
+        style="position: absolute; cursor: pointer; z-index: 2147483647; background: transparent; top: -100000px; left: -100000px;">
+    </div>
+    <div id="trend_notification_app" class="trend_notification_app_outer">
+        <div id="trend_notification">
+            <div id="trend_notification_con"></div>
+        </div>
+    </div>
+    <div id="fullscreen-modal" class="modal-overlay" onclick="closeModal()">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <img id="modal-img" class="modal-content">
+    </div>
+    <script>
+        // 取得燈箱相關元素
+        const modal = document.getElementById('fullscreen-modal');
+        const modalImg = document.getElementById('modal-img');
+
+        // 尋找網頁中所有帶有 .project-details-image 的圖片或 GIF
+        const projectImages = document.querySelectorAll('.project-details-image');
+
+        // 幫每一張圖片綁定「點擊事件」
+        projectImages.forEach(img => {
+            img.onclick = function (event) {
+                event.stopPropagation(); // 防止點擊事件衝突
+                modal.classList.add('active'); // 顯示燈箱
+                modalImg.src = this.src;       // 把被點擊的圖片網址，塞進燈箱裡
+            }
+        });
+
+        // 關閉燈箱的函數
+        function closeModal() {
+            modal.classList.remove('active'); // 隱藏燈箱
+            setTimeout(() => {
+                modalImg.src = ''; // 等動畫結束後清空圖片，避免下次打開閃爍舊圖
+            }, 300);
+        }
+
+
+
+        //  新的輪播（放這裡）
+        document.querySelectorAll('.slideshow-container').forEach(container => {
+            const wrapper = container.querySelector('.slides-wrapper');
+            const dots = container.querySelectorAll('.dot');
+            let currentIndex = 0;
+            const totalSlides = dots.length;
+
+            function autoPlay() {
+                currentIndex++;
+                if (currentIndex >= totalSlides) currentIndex = 0;
+                updateScroll();
+            }
+
+            function updateScroll() {
+                const slideWidth = wrapper.offsetWidth;
+                wrapper.scrollTo({
+                    left: slideWidth * currentIndex,
+                    behavior: 'smooth'
+                });
+                updateDots();
+            }
+
+            function updateDots() {
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            }
+
+            let interval = setInterval(autoPlay, 3000);
+
+            wrapper.addEventListener('scroll', () => {
+                const slideWidth = wrapper.offsetWidth;
+                const newIndex = Math.round(wrapper.scrollLeft / slideWidth);
+
+                if (newIndex !== currentIndex) {
+                    currentIndex = newIndex;
+                    updateDots();
+                    clearInterval(interval);
+                    interval = setInterval(autoPlay, 3000);
+                }
+            });
+        });
+
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+
+            // 如果你想讓一次只能展開一個活動，請加入下面這段：
+
+            document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                if (otherItem !== item) otherItem.classList.remove('active');
+            });
+
+
+            // 切換目前的展開/收合狀態
+            item.classList.toggle('active');
+        }
+    </script>
+
 </body>
+<umsdataelement id="UMSDataElement" style="display: none;"></umsdataelement>
+<div id="tmtoolbar_manual_rating_injected" style="display: none;">init</div>
+<div id="UMSSendDataEventElement" style="display: none;">init</div>
+
 </html>
