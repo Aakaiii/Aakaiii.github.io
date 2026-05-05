@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<!-- saved from url=(0027)https://aakaiii.github.io./ -->
+<html lang="zh-TW">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人作品集</title>
+    <style>
+        /* 基礎全域設定 */
+        :root {
+            --primary-blue: #003dfa;
+            --bg-beige: #efebe8;
+            --text-dark: #000000;
+            --card-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-beige);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* 頂部導覽列 */
+        header {
+            background-color: var(--card-white);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            /* 🚀修復：讓導覽列固定在頂部 */
+            top: 0;
+            z-index: 1000;
+            /* 確保不會被下面的內容蓋住 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 點擊選單跳轉時，預留 header 的高度 */
+        section {
+            scroll-margin-top: 100px;
+        }
+
+        .logo-area .name-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .blue-square {
+            width: 16px;
+            height: 16px;
+            background-color: var(--primary-blue);
+        }
+
+        .logo-name {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .logo-title {
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* 漢堡選單按鈕 */
+        .menu-btn {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            align-items: flex-end;
+        }
+
+        .menu-btn div {
+            height: 3px;
+            background-color: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn div:first-child {
+            width: 25px;
+        }
+
+        .menu-btn div:last-child {
+            width: 15px;
+        }
+
+        /* 全螢幕選單 */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--bg-beige);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            display: block;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 20px;
+            font-weight: bold;
+            margin: 25px 0;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .nav-links a.active {
+            color: var(--primary-blue);
+        }
+
+        /* ================= 主要內容區塊 ================= */
+        main {
+            padding: 20px;
+            max-width: 900px;
+            /* 🚀修復：從 480px 放大，讓所有卡片與幻燈片能正常顯示 */
+            margin: 0 auto;
+        }
+
+        /* Hero 區塊 */
+        .hero-card {
+            background-color: var(--card-white);
+            border-radius: 10px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            background: linear-gradient(to bottom, #f5f2f0 0%, #eae5e1 100%);
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            background-color: #ccc;
+        }
+
+        .hero-name {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            line-height: 1.1;
+        }
+
+        .hero-line {
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-blue);
+            margin: 15px auto 30px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: white;
+            border: 2px solid var(--primary-blue);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-dark);
+            border: 2px solid var(--text-dark);
+        }
+
+        .social-bar {
+            background-color: var(--card-white);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 0 -20px -40px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .social-bar a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* 通用 Section 標題 */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 60px 0 20px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .intro-text {
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        /* 專案與經驗卡片 */
+        .card {
+            background-color: var(--card-white);
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 25px;
+            width: 8px;
+            height: 40px;
+            background-color: var(--primary-blue);
+        }
+
+        .card-title {
+            color: var(--primary-blue);
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .card-subtitle {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .card-content p {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        /* 刪除原本的 .card-content strong，替換成下面這兩段 */
+
+        .card-content .info-row {
+            display: flex;
+            margin-bottom: 10px;
+            font-size: 15px;
+            align-items: flex-start;
+        }
+
+        .card-content .info-row strong {
+            flex: 0 0 85px;
+            /* 固定給標籤寬度，視需求調整 */
+            color: var(--text-dark);
+            display: inline-block;
+        }
+
+        .card-content .info-row span {
+            flex: 1;
+            /* 讓內容自動填滿剩餘空間 */
+        }
+
+        /* 針對清單內的調整 */
+        .contribution-list {
+            margin-left: 20px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .contribution-list li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .contribution-list strong {
+            display: inline;
+            /* 確保清單內的文字不會被強制設定寬度 */
+            color: var(--primary-blue);
+        }
+
+        /* ================= 影音外框 (修復破版) ================= */
+        .media-frame {
+            width: 100%;
+            max-width: 600px;
+            /* 限制最大寬度 */
+            margin: 15px auto;
+            /* 置中 */
+            background-color: var(--card-white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            aspect-ratio: 16 / 9;
+            /* 統一為 16:9 比例 */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        /* 🚀修復：移除絕對寬度，讓圖片乖乖待在容器內 */
+        .media-frame img,
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .project-details-image {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .project-details-image:hover {
+            transform: scale(1.02);
+        }
+
+        /* ================= 幻燈片樣式 ================= */
+        .slideshow-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slides-wrapper {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .slides-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--card-white);
+            aspect-ratio: 16 / 9;
+        }
+
+        .dots-container {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .dot {
+            height: 8px;
+            width: 8px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .dot.active {
+            background-color: var(--primary-blue);
+        }
+
+        /* ================= 展開式列表 (活動) ================= */
+        .activity-list {
+            width: 100%;
+            margin: 20px auto;
+            background: var(--card-white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .list-header,
+        .accordion-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 2fr;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .list-header {
+            background-color: #f9f9f9;
+            font-weight: bold;
+            color: #666;
+            border-bottom: 2px solid var(--primary-blue);
+        }
+
+        .accordion-header {
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .accordion-header:hover {
+            background-color: #f0f4ff;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease-out;
+            background-color: #fafafa;
+        }
+
+        .details-inner {
+            padding: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* 🚀修復：提高高度限制，讓有幻燈片的內容不會被卡掉一半 */
+        .accordion-item.active .accordion-content {
+            max-height: 2500px;
+        }
+
+        .accordion-item.active .accordion-header {
+            background-color: #f0f4ff;
+            font-weight: bold;
+        }
+
+        /* ================= 聯絡表單與頁尾 ================= */
+        .form-group {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid #000;
+            padding: 10px 0;
+            font-size: 16px;
+            background: transparent;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-bottom-color: var(--primary-blue);
+        }
+
+        footer {
+            margin-top: 80px;
+            padding: 40px 20px;
+            background-color: var(--card-white);
+            border-top: 1px solid #eee;
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-left p {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .location-tag {
+            margin-top: 5px;
+            font-size: 13px !important;
+        }
+
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-link {
+            text-decoration: none;
+            color: var(--primary-blue);
+            font-size: 14px;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .footer-link:hover {
+            opacity: 0.7;
+        }
+
+        .separator {
+            color: #ccc;
+        }
+
+        /* 手機版適應 */
+        @media (max-width: 600px) {
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* ================= 燈箱效果 ================= */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 99999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 95%;
+            max-height: 90vh;
+            border-radius: 10px;
+            object-fit: contain;
+            animation: zoomIn 0.3s ease;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 100000;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-area">
+            <div class="name-wrap">
+                <div class="blue-square"></div>
+                <div class="logo-name">莊孔禎</div>
+            </div>
+
+            ✉️ <span class="email-text">aa0908818817@gmail.com</span>
+        </div>
+
+
+        <div class="menu-btn" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <div class="nav-overlay" id="navMenu">
+        <div class="close-btn" onclick="toggleMenu()">✕</div>
+        <div class="nav-links">
+            <a href="#about" class="active" onclick="toggleMenu()">ABOUT ME</a>
+            <a href="#projects" onclick="toggleMenu()">PROJECTS</a>
+            <a href="#activity-competition" onclick="toggleMenu()">ACTIVITY & COMPETITION</a>
+            <a href="#experience" onclick="toggleMenu()">EXPERIENCE</a>
+            <a href="#education" onclick="toggleMenu()">EDUCATION</a>
+            <a href="#contact" onclick="toggleMenu()">CONTACT</a>
+        </div>
+    </div>
+
+    <main>
+        <section id="about">
+            <div class="hero-card">
+                <img src="image/me.jpg" alt="Profile Picture" class="profile-img">
+                <h1 class="hero-name">莊孔禎</h1><br>
+                <h2>Zhuang Kong Zhen</h2>
+                <div class="hero-line"></div>
+
+                <div style="margin: 15px 0; color: var(--primary-blue); font-weight: bold; font-size: 14px;">
+                    #好奇心 #觀察者 #快節奏 #喜歡講話
+                </div>
+
+                <div class="btn-group">
+                    
+                    <a href="#projects" class="btn btn-outline">看作品</a>
+
+                    <a href="resume.pdf" target="_blank" class="btn btn-primary">下載簡歷 PDF</a>
+
+                    <a href="#experience" class="btn btn-outline">看經歷</a>
+                </div>
+            </div>
+
+            <div class="section-header" style="margin-top: 50px;">
+                <h2 style="font-size: 48px;">About Me</h2>
+            </div>
+
+            <div class="intro-text" style="font-size: 18px; line-height: 1.8;">
+                我是莊孔禎，一個對世界充滿好奇心、熱衷於從日常中挖掘驚喜的人。
+                <br><br>
+                我相信細微的<strong>「觀察」</strong>是所有創意的起點。我天生喜歡觀察身邊的人事物，這讓我具備了敏銳的洞察力，也常讓我產生與眾不同的新奇想法。對我來說，生活不該是一成不變的，我享受每天<strong>「尋找好玩事物」</strong>的過程，並將這些靈感轉化為不一樣的視角。
+                <br><br>
+                我非常喜歡與人相處，享受交流中的火花。具備<strong>敏捷的反應能力</strong>，讓我能快速理解他人並給予暖心的回應。我喜歡挑戰，更喜歡在挑戰中找到樂趣，致力於用最靈活的思維，為世界帶來一點點不一樣。
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="section-header">
+                <div class="blue-square" style="width: 24px; height: 24px;"></div>
+                <h2>Projects</h2>
+            </div>
+            <p class="intro-text">以下是我過去參與的精選專案，包含畢業製作與個人網站開發，展現了我的技術能力與解決問題的思維。</p>
+
+            <div class="card">
+                <h3 class="card-title">畢業專題｜美惠姐講古：潤滑油顧問</h3>
+                <div class="card-subtitle">2025 - 2026 | 產學合作專題</div>
+
+                <div class="card-content">
+                    <div class="info-row">
+                        <strong>專案目標：</strong>
+                        <span>與傳統產業「隆福行」合作，針對知識斷層痛點，建構高可靠、即時互動的 AI 知識管理系統，實現專業技術的數位轉型與永續傳承。</span>
+                    </div>
+
+                    <div class="info-row">
+                        <strong>核心技術：</strong>
+                        <span>n8n, Ollama (LLM), Pinecone (向量資料庫), Docker, Line Bot API</span>
+                    </div>
+
+                    <p style="margin: 15px 0 10px; font-weight: bold; color: var(--primary-blue);">工作內容：</p>
+                    <ul class="contribution-list">
+                        <li><strong>RAG 架構開發：</strong>負責 n8n 自動化工作流，整合 Ollama 與 Pinecone 實現檢索增強生成架構。</li>
+                        <li><strong>系統部署優化：</strong>運用 Docker 容器化技術及 Line Bot 部署，確保開發與生產環境的一致性與隔離性。</li>
+                        <li><strong>權限系統設計：</strong>實作 <strong>RBAC (角色存取控制)</strong>，達成管理員與一般使用者之功能隔離。</li>
+                        <li><strong>需求分析與對接：</strong>實地與隆福行經理交流，將實務需求轉化為系統設計規格。</li>
+                    </ul>
+
+                    <div class="info-row" style="margin-top: 15px;">
+                        <strong>學習成果：</strong>
+                        <span>掌握容器化部署技術提升系統穩定性，並透過權限控管實作，建立數據隱私保護與防範越權存取的思維。</span>
+                    </div>
+                </div>
+                <br>
+
+
+                <p><strong>實際電腦操作</strong></p>
+                <div class="media-frame">
+                    <img src="video/demo.gif" alt="動態操作" loading="lazy" class="project-details-image">
+                </div>
+                <br>
+                <p><strong>手機操作</strong></p>
+                <div class="media-frame">
+
+                    <img src="video/phone.gif" alt="動態操作" loading="lazy" class="project-details-image">
+                </div>
+                <br>
+                <p><strong>圖像辨認示範</strong></p>
+                <div class="media-frame">
+                    <img src="video/picture.gif" alt="動態操作" loading="lazy" class="project-details-image">
+                </div>
+
+
+
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">開單舉報系統</h3>
+                <div class="card-subtitle">2024 (歷時 2 個月) | 系統分析與設計</div>
+
+                <div class="card-content">
+                    <div class="info-row">
+                        <strong>專案目標：</strong>
+                        <span>透過需求工程分析不同關係人（檢舉人、執法單位）的痛點，建構一套貼合需求的自動化舉報流程，提升舉報案件的處理效率與資料準確性。</span>
+                    </div>
+
+                    <p style="margin: 15px 0 10px; font-weight: bold; color: var(--primary-blue);">工作內容：</p>
+                    <ul class="contribution-list">
+                        <li><strong>完整業務邏輯規劃：</strong>規劃從前端影像擷取、中間 API 辨識車牌，到後端自動產出舉報文件的完整流程。</li>
+                        <li><strong>架構與資料庫設計：</strong>負責系統流程圖與資料庫結構設計，確保檢舉資料的流轉具備邏輯嚴密性。</li>
+                    </ul>
+
+                    <div class="info-row" style="margin-top: 15px;">
+                        <strong>學習成果：</strong>
+                        <span>體認到<strong>架構規劃的重要性</strong>，學習如何在開發前進行全盤的架構設計，確保系統在處理高嚴謹性業務時的完整性。</span>
+                    </div>
+                </div>
+
+                <br>
+                <div class="slideshow-container">
+                    <div class="slides-wrapper">
+                        <div class="slide">
+                            <img src="image/8.jpg" class="project-details-image" alt="Step 1">
+                        </div>
+                        <div class="slide">
+                            <img src="image/12.jpg" class="project-details-image" alt="Step 2">
+                        </div>
+                        <div class="slide">
+                            <img src="image/13.jpg" class="project-details-image" alt="Step 3">
+                        </div>
+                        <div class="slide">
+                            <img src="image/15.jpg" class="project-details-image" alt="Step 4">
+                        </div>
+                    </div>
+
+                    <div class="dots-container">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="card-title">電商網站開發 (前端與後端)</h3>
+                <div class="card-subtitle">2023 (前後端各 2 個月) | 團隊開發專案</div>
+
+                <div class="card-content">
+                    <div class="info-row">
+                        <strong>專案目標：</strong>
+                        <span>建立一套完整的電商平台，整合商品展示、會員系統與購物金流邏輯。</span>
+                    </div>
+
+                    <p style="margin: 15px 0 10px; font-weight: bold; color: var(--primary-blue);">工作內容：</p>
+                    <ul class="contribution-list">
+                        <li><strong>後端開發：</strong>設計資料庫關聯表，實作金流結帳邏輯、訂單管理、會員權限驗證與資料庫管理功能。</li>
+                        <li><strong>前端設計：</strong>負責響應式介面設計，確保使用者在註冊與支付流程中的互動流暢感。</li>
+                        <li><strong>前後端整合：</strong>製作時程安排，強化前後端的溝通與分工，以提升工作效率和完成度。</li>
+                    </ul>
+
+                    <div class="info-row" style="margin-top: 15px;">
+                        <strong>學習成果：</strong>
+                        <span>強化<strong>團隊合作與溝通能力</strong>，學習在多人且不熟識的開發環境中，透過技術文檔有效校閱需求、解決雙方問題，減少開發落差與不愉快。</span>
+                    </div>
+                </div>
+
+                <br>
+                <p><strong>實際網頁操作</strong><a href="https://aakaiii.github.io/aqua.github.io/" target="_blank"
+                        style="color: #003dfa; font-weight: bold; text-decoration: underline;">👉 點我看成品</a></p>
+                <div class="media-frame">
+                    <img src="video/virtual_store.gif" alt="動態操作" loading="lazy" class="project-details-image">
+                </div>
+
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">安卓程式設計：美髮預約系統</h3>
+                <div class="card-subtitle">2024 (歷時 1 個月) | 行動應用開發</div>
+
+                <div class="card-content">
+                    <div class="info-row">
+                        <strong>專案目標：</strong>
+                        <span>針對實體服務業開發行動預約 App，實現會員數位化管理與即時預約時段檢核。</span>
+                    </div>
+
+                    <p style="margin: 15px 0 10px; font-weight: bold; color: var(--primary-blue);">工作內容：</p>
+                    <ul class="contribution-list">
+                        <li><strong>App 開發：</strong>負責 Android App 完整生命週期開發，包含 UI/UX 介面設計與本地資料庫 (SQLite) 存取實作。</li>
+                        <li><strong>模組實作：</strong>實作會員註冊與登入模組，確保使用者身份驗證流程之流暢性。</li>
+                    </ul>
+
+                    <div class="info-row" style="margin-top: 15px;">
+                        <strong>學習成果：</strong>
+                        <span>掌握 <strong>App 製作技術</strong>，熟悉了行動端從開發、測試到數據存取的完整流程。</span>
+                    </div>
+                </div>
+
+                <br>
+                <div class="slideshow-container">
+                    <div class="slides-wrapper">
+                        <div class="slide">
+                            <img src="image/5.jpg" class="project-details-image" alt="Step 1">
+                        </div>
+                        <div class="slide">
+                            <img src="image/6.jpg" class="project-details-image" alt="Step 2">
+                        </div>
+                        <div class="slide">
+                            <img src="image/7.jpg" class="project-details-image" alt="Step 3">
+                        </div>
+                        <div class="slide">
+                            <img src="image/08.jpg" class="project-details-image" alt="Step 4">
+                        </div>
+                        <div class="slide">
+                            <img src="image/9.jpg" class="project-details-image" alt="Step 5">
+                        </div>
+                    </div>
+
+                    <div class="dots-container">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="activity-competition">
+            <div class="section-header">
+                <div class="blue-square" style="width: 24px; height: 24px;"></div>
+                <h2>Activity&Competition</h2>
+            </div>
+            <div class="activity-list">
+                <div class="list-header">
+                    <div class="col-name">活動/比賽名稱</div>
+                    <div class="col-year">年級</div>
+                    <div class="col-role">擔任工作</div>
+                </div>
+
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="col-name">解決問題能力競賽-第一屆</div>
+                        <div class="col-year">大一</div>
+                        <div class="col-role">主題設計構想</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="details-inner">
+                            <p><strong>活動摘要：</strong>這是關於第一屆競賽的詳細描述，我們解決了...</p>
+                            <div class="slideshow-container">
+                                <div class="slides-wrapper">
+                                    <div class="slide"><img src="image/solve1.png" class="project-details-image"></div>
+                                    <div class="slide">
+                                        <div class="text-placeholder-card">
+                                            <div class="card-icon">💡</div>
+                                            <!-- <p>"雖然沒有現場照片，但這次經驗讓我學會了..."</p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="col-name">解決問題能力競賽-第二屆</div>
+                        <div class="col-year">大二</div>
+                        <div class="col-role">主題設計構想</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="details-inner">
+                            <!-- <p><strong>活動摘要：</strong>內容...</p> -->
+                            <div class="slide"><img src="image/solve2.png" class="project-details-image"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="col-name">台灣經貿網跨境電商實戰營</div>
+                        <div class="col-year">大三</div>
+                        <div class="col-role">學員(書面統計及報告)</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="details-inner">
+                            <!-- <p><strong>活動摘要：</strong>在微軟實踐營中，我負責...</p> -->
+                            <div class="slide"><img src="image/blue.png" class="project-details-image"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="col-name">Google Analytics 4 Certification</div>
+                        <div class="col-year">大三</div>
+                        <div class="col-role">學員(實際操作)</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="details-inner">
+                            <!-- <p><strong>活動摘要：</strong>在微軟實踐營中，我負責...</p> -->
+                            <div class="slide"><img src="image/GA4.png" class="project-details-image"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="col-name">NVIDIA大使工作坊-深度學習入門認證</div>
+                        <div class="col-year">大四</div>
+                        <div class="col-role">學員(實際操作)</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="details-inner">
+                            <!-- <p><strong>活動摘要：</strong>在微軟實踐營中，我負責...</p> -->
+                            <div class="slide"><img src="image/Nvidia.png" class="project-details-image"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="col-name">微軟 - Coding Angels</div>
+                        <div class="col-year">大四</div>
+                        <div class="col-role">學員(實際操作)</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="details-inner">
+                            <!-- <p><strong>活動摘要：</strong>在微軟實踐營中，我負責...</p> -->
+                            <div class="slide"><img src="image/microsoft.jpg" class="project-details-image"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="experience">
+
+            <div class="section-header">
+                <div class="blue-square" style="width: 24px; height: 24px;"></div>
+                <h2>Experience</h2>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">試務人員</h3>
+                <div class="card-subtitle">中原大學 推廣教育處 | 2023.09 - 2025.02</div>
+                <div class="card-content">
+                    <div class="info-row">
+                        <strong>職責描述：</strong>
+                        <span>負責多項國家級與大型語言檢定考試之試務監考與行政支援。</span>
+                    </div>
+                    <p style="margin: 15px 0 10px; font-weight: bold; color: var(--primary-blue);">工作內容：</p>
+                    <ul class="contribution-list">
+                        <li><strong>多類別檢定監理：</strong>包含多益 (TOEIC)、英語能力、閩南語、客家語及原住民族語等多樣化考試。</li>
+                        <li><strong>流程與環境控管：</strong>管理考場秩序，協助考場設備佈署與運送，確保試務流程符合嚴謹規範。</li>
+                        <li><strong>現場應變服務：</strong>指引考生及陪同人員，並即時處理解決試場中的各種突發狀況。</li>
+                    </ul>
+                    <div class="info-row" style="margin-top: 15px;">
+                        <strong>學習成果：</strong>
+                        <span>建立面對不同人群與變動環境的<strong>高反應速度</strong>，能在有限時間內以最精準的方式解決問題。</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+
+
+                <h3 class="card-title">前端工程師</h3>
+                <div class="card-subtitle">中原大學 華語文教學中心 | 2024.03 - 2024.07</div>
+                <div class="card-content">
+                    <div class="info-row">
+                        <strong>職責描述：</strong>
+                        <span>負責「華語文學習官方網站」之開發與建置，旨在為外籍人士提供直覺的中文學習資訊入口。</span>
+                    </div>
+                    <p style="margin: 15px 0 10px; font-weight: bold; color: var(--primary-blue);">工作內容：</p>
+                    <ul class="contribution-list">
+                        <li><strong>平台開發：</strong>運用 <strong>WordPress</strong> 進行網站架構搭建與內容管理系統整合。</li>
+                        <li><strong>跨領域協作：</strong>首次與美術設計、應用華語系教授等多方背景人員合作，將教學需求轉化為網頁功能。</li>
+                        <li><strong>需求轉化：</strong>深入參與介面設計討論，確保網頁視覺與操作邏輯符合目標使用者（外籍人士）之需求。</li>
+                    </ul>
+                    <div class="info-row" style="margin-top: 15px;">
+                        <strong>學習成果：</strong>
+                        <span>磨練了<strong>跨背景溝通能力</strong>，學習如何與非技術人員高效協作，並在多元意見中找出技術實作的最佳解決方案。</span>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+
+        <section id="education">
+            <div class="section-header">
+
+                <div class="blue-square" style="width: 24px; height: 24px;"></div>
+                <h2>Education</h2>
+            </div>
+
+            <div class="card">
+                <p class="item-date">2022 - 2026</p>
+                <h3 class="item-name">中原大學 - 資訊管理學系</h3>
+                <p class="item-desc">
+                    <strong>核心領域：</strong>資訊管理(系統分析與設計、軟體專案管理、資訊系統規劃與整合)、人工智慧與資料應用<br>
+                    <strong>專題研究：</strong>美惠姐講古：潤滑油顧問，負責專案設計、時程控管、上台發表、測試與技術文件撰寫。
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <section id="contact" style="padding: 60px 20px; background-color: var(--bg-beige);">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <div class="blue-square" style="width: 24px; height: 24px; margin: 0 auto 15px;"></div>
+            <h2 style="font-size: 42px; font-weight: bold;">Let's talk</h2>
+        </div>
+
+        <div
+            style="max-width: 500px; margin: 0 auto; background: white; padding: 40px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+
+            <form action="https://formsubmit.co/aa0908818817@gmail.com" method="POST">
+
+                <input type="hidden" name="_subject" value="來自個人作品集的新訊息！">
+                <input type="hidden" name="_captcha" value="false">
+
+                <div class="form-group">
+                    <label>First Name *</label>
+                    <input type="text" name="first_name" required="">
+                </div>
+
+                <div class="form-group">
+                    <label>Last Name *</label>
+                    <input type="text" name="last_name" required="">
+                </div>
+
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" name="email" required="">
+                </div>
+
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input type="text" name="subject">
+                </div>
+
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="message" rows="4"
+                        style="border: none; border-bottom: 2px solid #000; width: 100%; outline: none;"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary"
+                    style="width: 100%; border-radius: 0; margin-top: 30px; cursor: pointer; border: none; padding: 15px;">
+                    SEND
+                </button>
+            </form>
+        </div>
+
+    </section>
+
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>© 2026 莊孔禎 All rights reserved.</p>
+                <p class="location-tag">📍 Based in New Taipei, Taiwan</p>
+            </div>
+
+            <div class="footer-right">
+                <a href="resume.pdf" target="_blank" class="footer-link">Download CV</a>
+                <span class="separator">|</span>
+                <a href="#top" class="footer-link">Back to Top ↑</a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // 控制手機版選單的開關
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+    </script>
+
+    <div id="UMS_TOOLTIP"
+        style="position: absolute; cursor: pointer; z-index: 2147483647; background: transparent; top: -100000px; left: -100000px;">
+    </div>
+    <div id="trend_notification_app" class="trend_notification_app_outer">
+        <div id="trend_notification">
+            <div id="trend_notification_con"></div>
+        </div>
+    </div>
+    <div id="fullscreen-modal" class="modal-overlay" onclick="closeModal()">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <img id="modal-img" class="modal-content">
+    </div>
+    <script>
+        // 取得燈箱相關元素
+        const modal = document.getElementById('fullscreen-modal');
+        const modalImg = document.getElementById('modal-img');
+
+        // 尋找網頁中所有帶有 .project-details-image 的圖片或 GIF
+        const projectImages = document.querySelectorAll('.project-details-image');
+
+        // 幫每一張圖片綁定「點擊事件」
+        projectImages.forEach(img => {
+            img.onclick = function (event) {
+                event.stopPropagation(); // 防止點擊事件衝突
+                modal.classList.add('active'); // 顯示燈箱
+                modalImg.src = this.src;       // 把被點擊的圖片網址，塞進燈箱裡
+            }
+        });
+
+        // 關閉燈箱的函數
+        function closeModal() {
+            modal.classList.remove('active'); // 隱藏燈箱
+            setTimeout(() => {
+                modalImg.src = ''; // 等動畫結束後清空圖片，避免下次打開閃爍舊圖
+            }, 300);
+        }
+
+
+
+        //  新的輪播（放這裡）
+        document.querySelectorAll('.slideshow-container').forEach(container => {
+            const wrapper = container.querySelector('.slides-wrapper');
+            const dots = container.querySelectorAll('.dot');
+            let currentIndex = 0;
+            const totalSlides = dots.length;
+
+            function autoPlay() {
+                currentIndex++;
+                if (currentIndex >= totalSlides) currentIndex = 0;
+                updateScroll();
+            }
+
+            function updateScroll() {
+                const slideWidth = wrapper.offsetWidth;
+                wrapper.scrollTo({
+                    left: slideWidth * currentIndex,
+                    behavior: 'smooth'
+                });
+                updateDots();
+            }
+
+            function updateDots() {
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            }
+
+            let interval = setInterval(autoPlay, 3000);
+
+            wrapper.addEventListener('scroll', () => {
+                const slideWidth = wrapper.offsetWidth;
+                const newIndex = Math.round(wrapper.scrollLeft / slideWidth);
+
+                if (newIndex !== currentIndex) {
+                    currentIndex = newIndex;
+                    updateDots();
+                    clearInterval(interval);
+                    interval = setInterval(autoPlay, 3000);
+                }
+            });
+        });
+
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+
+            // 如果你想讓一次只能展開一個活動，請加入下面這段：
+
+            document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                if (otherItem !== item) otherItem.classList.remove('active');
+            });
+
+
+            // 切換目前的展開/收合狀態
+            item.classList.toggle('active');
+        }
+    </script>
+
+</body>
+<umsdataelement id="UMSDataElement" style="display: none;"></umsdataelement>
+<div id="tmtoolbar_manual_rating_injected" style="display: none;">init</div>
+<div id="UMSSendDataEventElement" style="display: none;">init</div>
+
+</html>
